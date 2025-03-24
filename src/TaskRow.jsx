@@ -2,11 +2,9 @@ import { Context } from "./GlobalContext";
 import React from "react";
 
 const TableRow = React.memo(({ task }) => {
-	const tasksData = Context();
-
 	return (
 		<>
-			<tr key={task.id}>
+			<tr>
 				<th scope="row">{task.title}</th>
 				<td
 					className={

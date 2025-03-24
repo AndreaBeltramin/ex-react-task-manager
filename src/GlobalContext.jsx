@@ -1,31 +1,20 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import useTasks from "./useTasks";
 
+// creo un contesto
 const GlobalContext = createContext();
 
+// esporto il provider
 export const GlobalProvider = ({ children }) => {
-	const apiUrl = import.meta.env.VITE_URL_API;
+	const { tasks, fetchTaskList, addTask, removeTask, updateTask } = useTasks();
 
-	// all'avvio dell'app effettuo una richiesta al server per ricevere le task
-	useEffect(() => {
-		fetchTaskList();
-	}, []);
-
-	const [taskData, setTaskData] = useState([]);
-
-	const fetchTaskList = () => {
-		fetch(`${apiUrl}/tasks`)
-			.then((res) => res.json())
-			.then((data) => {
-				setTaskData(data);
-			})
-			.catch((error) => console.error(error));
-	};
-
+	// return del provider
 	return (
-		<GlobalContext.Provider value={taskData}>{children}</GlobalContext.Provider>
+		<GlobalContext.Provider value={tasks}>{children}</GlobalContext.Provider>
 	);
 };
 
+// esporto il contesto
 export const Context = () => {
 	return useContext(GlobalContext);
 };

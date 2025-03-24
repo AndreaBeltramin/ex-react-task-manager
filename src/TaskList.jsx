@@ -2,7 +2,7 @@ import { Context } from "./GlobalContext";
 import TableRow from "./TaskRow";
 
 export default function TaskList() {
-	const tasksData = Context();
+	const tasks = Context();
 
 	return (
 		<>
@@ -18,7 +18,7 @@ export default function TaskList() {
 					</tr>
 				</thead>
 				<tbody>
-					{tasksData.map((task) => (
+					{tasks.map((task) => (
 						<TableRow task={task} key={task.id} />
 					))}
 				</tbody>
