@@ -10,20 +10,19 @@ export const GlobalProvider = ({ children }) => {
 		fetchTaskList();
 	}, []);
 
-	const [data, setData] = useState([]);
+	const [taskData, setTaskData] = useState([]);
 
 	const fetchTaskList = () => {
 		fetch(`${apiUrl}/tasks`)
 			.then((res) => res.json())
 			.then((data) => {
-				setData(data);
-				console.log(data);
+				setTaskData(data);
 			})
 			.catch((error) => console.error(error));
 	};
 
 	return (
-		<GlobalContext.Provider value={data}>{children}</GlobalContext.Provider>
+		<GlobalContext.Provider value={taskData}>{children}</GlobalContext.Provider>
 	);
 };
 
