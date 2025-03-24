@@ -1,10 +1,20 @@
-import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import DefaultLayout from "./DefaultLayout";
+
+//importazione pagine
+import TaskList from "./TaskList";
+import AddTask from "./AddTask";
 
 function App() {
 	return (
-		<div>
-			<h1>Titolo</h1>
-		</div>
+		<BrowserRouter>
+			<Routes>
+				<Route Component={DefaultLayout}>
+					<Route path="/" Component={TaskList} />
+					<Route path="/addTask" Component={AddTask} />
+				</Route>
+			</Routes>
+		</BrowserRouter>
 	);
 }
 
