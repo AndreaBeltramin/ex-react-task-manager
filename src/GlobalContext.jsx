@@ -10,7 +10,9 @@ export const GlobalProvider = ({ children }) => {
 
 	// return del provider
 	return (
-		<GlobalContext.Provider value={[tasks, addTask, removeTask]}>
+		<GlobalContext.Provider
+			value={[tasks, fetchTaskList, addTask, removeTask, updateTask]}
+		>
 			{children}
 		</GlobalContext.Provider>
 	);
