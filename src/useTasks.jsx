@@ -41,7 +41,22 @@ export default function useTasks() {
 			});
 	};
 
-	const removeTask = () => {};
+	const removeTask = (id) => {
+		fetch(`${apiUrl}/tasks/${id}`, {
+			method: "DELETE",
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				if (data.success === false) {
+					alert(data.message);
+					return;
+				} else if (data.success === true) {
+					console.log(data);
+					alert("Task eliminata con successo");
+					fetchTaskList();
+				}
+			});
+	};
 	const updateTask = () => {};
 
 	return { tasks, fetchTaskList, addTask, removeTask, updateTask };
