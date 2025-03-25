@@ -1,11 +1,15 @@
-import { Context } from "./GlobalContext";
 import React from "react";
+
+import { Link } from "react-router-dom";
 
 const TableRow = React.memo(({ task }) => {
 	return (
 		<>
 			<tr>
-				<th scope="row">{task.title}</th>
+				<th scope="row">
+					<Link to={`/task/${task.id}`}>{task.title}</Link>
+				</th>
+
 				<td
 					className={
 						task.status === "To do"

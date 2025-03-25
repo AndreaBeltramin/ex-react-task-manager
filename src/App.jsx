@@ -5,6 +5,7 @@ import { GlobalProvider } from "./GlobalContext";
 //importazione pagine
 import TaskList from "./TaskList";
 import AddTask from "./AddTask";
+import TaskDetail from "./TaskDetail";
 
 function App() {
 	return (
@@ -13,6 +14,7 @@ function App() {
 				<Routes>
 					<Route Component={DefaultLayout}>
 						<Route path="/" Component={TaskList} />
+						<Route path="/task/:id" Component={TaskDetail} />
 						<Route path="/addTask" Component={AddTask} />
 					</Route>
 				</Routes>
