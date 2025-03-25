@@ -19,7 +19,28 @@ export default function useTasks() {
 			.catch((error) => console.error(error));
 	};
 
-	const addTask = () => {};
+	const addTask = (data) => {
+		fetch(`${apiUrl}/tasks`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(data),
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				if (data.success === false) {
+					console.error(data.message);
+					alert(data.message);
+					return;
+				} else if (data.success === true) {
+					console.log(data);
+					alert("Aggiunta task avvenuta con successo");
+					fetchTaskList();
+				}
+			});
+	};
+
 	const removeTask = () => {};
 	const updateTask = () => {};
 

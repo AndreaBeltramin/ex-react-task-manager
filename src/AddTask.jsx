@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { Context } from "./GlobalContext";
 
 const symbols = "!@#$%^&*()-_=+[]{}|;:'\\\",.<>?/`~";
 
@@ -6,20 +7,29 @@ export default function AddTask() {
 	const [title, setTitle] = useState("");
 	const descriptionRef = useRef();
 	const statusRef = useRef();
+	const [tasks, addTask] = Context();
 
 	const isTitleNotValid = [...title].some((char) => symbols.includes(char));
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (!title || isTitleNotValid) {
 			alert("Inserisci un titolo valido!");
 			return;
 		}
-
-		console.log("task", {
+		const data = {
 			title,
 			description: descriptionRef.current.value,
 			status: statusRef.current.value,
-		});
+		};
+		addTask(data);
+
+		// console.log("task", {
+		// 	title,
+		// 	description: descriptionRef.current.value,
+		// 	status: statusRef.current.value,
+		// });
+
 		setTitle("");
 		descriptionRef.current.value = "";
 		statusRef.current.value = "";
