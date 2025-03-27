@@ -18,27 +18,20 @@ export default function useTasks() {
 			.catch((error) => console.error(error));
 	};
 
-	const addTask = (data) => {
-		fetch(`${apiUrl}/tasks`, {
+	const addTask = async (newTask) => {
+		const response = await fetch(`${apiUrl}/tasks`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify(data),
-		})
-			.then((res) => res.json())
-			.then((data) => {
-				if (data.success === false) {
-					console.error(data.message);
-					alert(data.message);
-					return;
-				} else if (data.success === true) {
-					alert("Aggiunta task avvenuta con successo");
-					fetchTaskList();
-				}
-			});
+			body: JSON.stringify(newTask),
+		});
+		const { success, message, task } = await response.json();
+		if (!success) {
+			throw new Error(message);
+		}
+		setTasks((prev) => [...prev, task]);
 	};
-
 	const removeTask = (id) => {
 		fetch(`${apiUrl}/tasks/${id}`, {
 			method: "DELETE",
@@ -68,7 +61,6 @@ export default function useTasks() {
 			if (!data.success) {
 				throw new Error(data.message);
 			}
-
 			setTasks((prevTasks) =>
 				prevTasks.map((task) => (task.id === updatedTask.id ? data.task : task))
 			);
@@ -77,5 +69,5 @@ export default function useTasks() {
 		}
 	};
 
-	return { tasks, setTasks, fetchTaskList, addTask, removeTask, updateTask };
+	return { tasks, fetchTaskList, addTask, removeTask, updateTask };
 }

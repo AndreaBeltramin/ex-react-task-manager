@@ -16,24 +16,25 @@ export default function AddTask() {
 		return "";
 	}, [title]);
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
+
 		if (isTitleNotValid) return;
+
 		const newTask = {
 			title: title.trim(),
 			description: descriptionRef.current.value,
 			status: statusRef.current.value,
 		};
-		addTask(newTask);
-
-		// console.log("task", {
-		// 	title,
-		// 	description: descriptionRef.current.value,
-		// 	status: statusRef.current.value,
-		// });
-
-		setTitle("");
-		descriptionRef.current.value = "";
+		try {
+			await addTask(newTask);
+			alert("Task aggiunta con successo!");
+			setTitle("");
+			descriptionRef.current.value = "";
+			statusRef.current.value = "";
+		} catch (error) {
+			alert(error.message);
+		}
 	};
 	return (
 		<>
