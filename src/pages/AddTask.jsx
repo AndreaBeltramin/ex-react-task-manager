@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { taskContext } from "./GlobalContext";
+import { taskContext } from "../GlobalContext";
 
 const symbols = "!@#$%^&*()-_=+[]{}|;:'\\\",.<>?/`~";
 

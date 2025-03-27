@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-import AddTask from "./AddTask";
 
 export default function Header() {
 	return (

@@ -3,8 +3,8 @@ import DefaultLayout from "./DefaultLayout";
 import { GlobalProvider } from "./GlobalContext";
 
 //importazione pagine
-import TaskList from "./TaskList";
-import AddTask from "./AddTask";
+import TaskList from "./pages/TaskList";
+import AddTask from "./pages/AddTask";
 import TaskDetail from "./TaskDetail";
 
 function App() {

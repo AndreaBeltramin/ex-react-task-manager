@@ -1,6 +1,6 @@
 import { useMemo, useState, useRef, useCallback } from "react";
-import { taskContext } from "./GlobalContext";
-import TableRow from "./TaskRow";
+import { taskContext } from "../GlobalContext";
+import TableRow from "../TaskRow";
 
 // Funzione debounce generica
 function debounce(callback, delay) {
@@ -19,6 +19,8 @@ export default function TaskList() {
 	const [sortBy, setSortBy] = useState("createdAt");
 	// rappresenta la direzione ( 1 crescente, -1 decrescente)
 	const [sortOrder, setSortOrder] = useState(1);
+
+	const [checked, setChecked] = useState();
 
 	const searchQueryRef = useRef();
 
@@ -105,7 +107,7 @@ export default function TaskList() {
 							</thead>
 							<tbody>
 								{sortedTasks.map((task) => (
-									<TableRow task={task} key={task.id} />
+									<TableRow task={task} checked onToggle key={task.id} />
 								))}
 							</tbody>
 						</table>

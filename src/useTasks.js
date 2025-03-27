@@ -55,6 +55,7 @@ export default function useTasks() {
 				}
 			});
 	};
+
 	const updateTask = async (updatedTask) => {
 		try {
 			const response = await fetch(`${apiUrl}/tasks/${updatedTask.id}`, {

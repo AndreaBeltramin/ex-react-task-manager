@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-const TableRow = React.memo(({ task }) => {
+const TableRow = React.memo(({ task, checked, onToggle }) => {
 	return (
 		<>
 			<tr>
 				<th scope="row">
-					<Link to={`/task/${task.id}`}>{task.title}</Link>
+					<div className="d-flex justify-content-between">
+						<Link to={`/task/${task.id}`}>{task.title}</Link>
+						<input
+							type="checkbox"
+							checked={checked}
+							// onChange={onToggle(task.id)}
+						/>
+					</div>
 				</th>
 
 				<td
@@ -20,7 +27,7 @@ const TableRow = React.memo(({ task }) => {
 				>
 					{task.status}
 				</td>
-				<td>{task.createdAt}</td>
+				<td>{new Date(task.createdAt).toLocaleDateString()}</td>
 			</tr>
 		</>
 	);
