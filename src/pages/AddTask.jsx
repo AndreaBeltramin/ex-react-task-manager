@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 import { taskContext } from "../GlobalContext";
 
 const symbols = "!@#$%^&*()-_=+[]{}|;:'\\\",.<>?/`~";
@@ -9,20 +9,22 @@ export default function AddTask() {
 	const statusRef = useRef();
 	const { addTask } = taskContext();
 
-	const isTitleNotValid = [...title].some((char) => symbols.includes(char));
+	const isTitleNotValid = useMemo(() => {
+		if (!title.trim()) return "Il titolo non può essere vuoto";
+		if ([...title].some((char) => symbols.includes(char)))
+			return "Il titolo non può contenere simboli";
+		return "";
+	}, [title]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		if (!title || isTitleNotValid) {
-			alert("Inserisci un titolo valido!");
-			return;
-		}
-		const data = {
-			title,
+		if (isTitleNotValid) return;
+		const newTask = {
+			title: title.trim(),
 			description: descriptionRef.current.value,
 			status: statusRef.current.value,
 		};
-		addTask(data);
+		addTask(newTask);
 
 		// console.log("task", {
 		// 	title,
@@ -32,7 +34,6 @@ export default function AddTask() {
 
 		setTitle("");
 		descriptionRef.current.value = "";
-		statusRef.current.value = "";
 	};
 	return (
 		<>
@@ -52,6 +53,9 @@ export default function AddTask() {
 									value={title}
 									onChange={(e) => setTitle(e.target.value)}
 								/>
+								{isTitleNotValid && (
+									<p style={{ color: "red" }}>{isTitleNotValid}</p>
+								)}
 							</div>
 							<div className="mb-3">
 								<label htmlFor="descrizioneTask" className="form-label">
@@ -65,7 +69,12 @@ export default function AddTask() {
 							</div>
 
 							<div className="mb-3">
-								<select className="form-select" id="selectTask" ref={statusRef}>
+								<select
+									className="form-select"
+									id="selectTask"
+									ref={statusRef}
+									defaultValue="To do"
+								>
 									<option defaultValue="Seleziona uno status">
 										Seleziona uno status
 									</option>
@@ -74,8 +83,8 @@ export default function AddTask() {
 									<option value="Done">Done</option>
 								</select>
 							</div>
-							<button type="submit" className="btn btn-primary">
-								Submit
+							<button className="btn btn-primary" disabled={isTitleNotValid}>
+								Aggiungi Task
 							</button>
 						</form>
 					</div>

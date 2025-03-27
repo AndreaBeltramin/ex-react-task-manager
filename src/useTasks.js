@@ -33,7 +33,6 @@ export default function useTasks() {
 					alert(data.message);
 					return;
 				} else if (data.success === true) {
-					console.log(data);
 					alert("Aggiunta task avvenuta con successo");
 					fetchTaskList();
 				}
