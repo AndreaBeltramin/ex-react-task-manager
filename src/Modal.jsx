@@ -15,7 +15,7 @@ export default function Modal({
 				<div className="modal-header">
 					<h5 className="modal-title">{title}</h5>
 				</div>
-				<div className="modal-body">
+				<div className="modal-body mb-2">
 					<div>{content}</div>
 				</div>
 				<div className="modal-footer">

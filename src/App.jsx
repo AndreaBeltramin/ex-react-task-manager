@@ -5,7 +5,7 @@ import { GlobalProvider } from "./GlobalContext";
 //importazione pagine
 import TaskList from "./pages/TaskList";
 import AddTask from "./pages/AddTask";
-import TaskDetail from "./TaskDetail";
+import TaskDetail from "./pages/TaskDetail";
 
 function App() {
 	return (

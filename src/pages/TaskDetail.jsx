@@ -1,8 +1,8 @@
-import { useContext, useState } from "react";
-import { taskContext } from "./GlobalContext";
+import { useState } from "react";
+import { taskContext } from "../GlobalContext";
 import { useParams, useNavigate } from "react-router-dom";
-import Modal from "./Modal";
-import EditTaskModal from "./EditTaskModal";
+import Modal from "../Modal";
+import EditTaskModal from "../EditTaskModal";
 
 export default function TaskDetail() {
 	const { tasks, removeTask, updateTask } = taskContext();
@@ -10,11 +10,20 @@ export default function TaskDetail() {
 	const navigate = useNavigate();
 	const [showModal, setShowModal] = useState(false);
 	const [showEditModal, setShowEditModal] = useState(false);
+
 	const taskDetail = tasks.find((task) => task.id == id);
 
-	function handleConfirm() {
-		removeTask(id);
-		navigate("/");
+	if (!taskDetail) return <h1 className="mt-4 ms-4">Task non trovata!</h1>;
+
+	async function handleConfirm() {
+		try {
+			await removeTask(id);
+			alert("Task eliminata con successo!");
+			navigate("/");
+		} catch (error) {
+			console.error(error);
+			alert(error.message);
+		}
 	}
 
 	async function handleSave(updatedTask) {
@@ -30,10 +39,16 @@ export default function TaskDetail() {
 		<div className="container mt-4">
 			{taskDetail ? (
 				<div>
-					<h1>Task detail di: {taskDetail.title}</h1>
-					<p>Stato: {taskDetail.status}</p>
-					<p>Descrizione: {taskDetail.description}</p>
-					<p>Creata il: {taskDetail.createdAt}</p>
+					<h1 className="mb-4">Dettaglio della task: {taskDetail.title}</h1>
+					<div>
+						<p>
+							Stato: <strong>{taskDetail.status}</strong>
+						</p>
+						<p>Descrizione: {taskDetail.description}</p>
+						<p>
+							Creata il: {new Date(taskDetail.createdAt).toLocaleDateString()}
+						</p>
+					</div>
 					<button
 						onClick={() => {
 							setShowModal(true);

@@ -9,6 +9,7 @@ export default function useTasks() {
 		fetchTaskList();
 	}, []);
 
+	// funzione per visualizzare la lista delle task
 	const fetchTaskList = () => {
 		fetch(`${apiUrl}/tasks`)
 			.then((res) => res.json())
@@ -18,6 +19,7 @@ export default function useTasks() {
 			.catch((error) => console.error(error));
 	};
 
+	// funzione per aggiungere una task
 	const addTask = async (newTask) => {
 		const response = await fetch(`${apiUrl}/tasks`, {
 			method: "POST",
@@ -32,22 +34,19 @@ export default function useTasks() {
 		}
 		setTasks((prev) => [...prev, task]);
 	};
-	const removeTask = (id) => {
-		fetch(`${apiUrl}/tasks/${id}`, {
+
+	// funzione per rimuovere una task
+	const removeTask = async (id) => {
+		const response = await fetch(`${apiUrl}/tasks/${id}`, {
 			method: "DELETE",
-		})
-			.then((res) => res.json())
-			.then((data) => {
-				if (data.success === false) {
-					alert(data.message);
-					return;
-				} else if (data.success === true) {
-					alert("Task eliminata con successo");
-					fetchTaskList();
-				}
-			});
+		});
+		const { success, message } = await response.json();
+		if (!success) throw new Error(message);
+
+		setTasks((prev) => prev.filter((task) => task.id !== id));
 	};
 
+	// funzione per modificare una task
 	const updateTask = async (updatedTask) => {
 		try {
 			const response = await fetch(`${apiUrl}/tasks/${updatedTask.id}`, {
