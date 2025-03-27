@@ -77,5 +77,5 @@ export default function useTasks() {
 		}
 	};
 
-	return { tasks, fetchTaskList, addTask, removeTask, updateTask };
+	return { tasks, setTasks, fetchTaskList, addTask, removeTask, updateTask };
 }

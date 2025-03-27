@@ -6,12 +6,20 @@ const GlobalContext = createContext();
 
 // esporto il provider
 export const GlobalProvider = ({ children }) => {
-	const { tasks, fetchTaskList, addTask, removeTask, updateTask } = useTasks();
+	const { tasks, setTasks, fetchTaskList, addTask, removeTask, updateTask } =
+		useTasks();
 
 	// return del provider
 	return (
 		<GlobalContext.Provider
-			value={{ tasks, fetchTaskList, addTask, removeTask, updateTask }}
+			value={{
+				tasks,
+				setTasks,
+				fetchTaskList,
+				addTask,
+				removeTask,
+				updateTask,
+			}}
 		>
 			{children}
 		</GlobalContext.Provider>
