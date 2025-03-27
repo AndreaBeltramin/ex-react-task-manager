@@ -28,7 +28,7 @@ export default function Header() {
 									aria-current="page"
 									href="#"
 								>
-									Home/Lista Task
+									Lista Task
 								</NavLink>
 							</li>
 							<li className="nav-item">

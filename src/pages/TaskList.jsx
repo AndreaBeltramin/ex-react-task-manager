@@ -15,6 +15,7 @@ function debounce(callback, delay) {
 
 export default function TaskList() {
 	const { tasks, setTasks } = taskContext();
+
 	// rappresenta il criterio di ordinamento (title, status, createdAt)
 	const [sortBy, setSortBy] = useState("createdAt");
 	// rappresenta la direzione ( 1 crescente, -1 decrescente)
@@ -43,12 +44,21 @@ export default function TaskList() {
 	// funzione per ordinare i tasks
 	const sortedTasks = useMemo(() => {
 		return [...tasks].sort((a, b) => {
+			// ci calcoliamo tutto in modo crescente, poi con * sortOrder
+			// (se sortOrder dovesse essere -1) ci troviamo l'ordine decrescente
 			if (sortBy === "title") {
 				return a.title.localeCompare(b.title) * sortOrder;
 			} else if (sortBy === "status") {
-				return a.status.localeCompare(b.status) * sortOrder;
+				// faccio un sort numerico invece di quello alfabetico dove i valori numerici sono
+				// gli indici a cui appartengono gli status nell'array, in questo modo li gestico come numeri
+				const statusOptions = ["To do", "Doing", "Done"];
+				const statusA = statusOptions.indexOf(a.status);
+				const statusB = statusOptions.indexOf(b.status);
+				return (statusA - statusB) * sortOrder;
 			} else if (sortBy === "createdAt") {
-				return a.createdAt.localeCompare(b.createdAt) * sortOrder;
+				const dateA = new Date(a.createdAt).getTime();
+				const dateB = new Date(b.createdAt).getTime();
+				return (dateA - dateB) * sortOrder;
 			}
 			return 0;
 		});
@@ -63,6 +73,8 @@ export default function TaskList() {
 			setSortOrder(1);
 		}
 	};
+
+	const sortIcon = sortOrder === 1 ? "▲ C" : "▼ D";
 
 	return (
 		<>
@@ -84,23 +96,13 @@ export default function TaskList() {
 							<thead>
 								<tr>
 									<th scope="col" onClick={() => handleSort("title")}>
-										Nome{" "}
-										{sortBy === "title"
-											? sortOrder === 1
-												? "▲ C"
-												: "▼ D"
-											: ""}
+										Nome {sortBy === "title" && sortIcon}
 									</th>
 									<th scope="col" onClick={() => handleSort("status")}>
-										Stato{" "}
-										{sortBy === "status"
-											? sortOrder === 1
-												? "▲ C"
-												: "▼ D"
-											: ""}
+										Stato {sortBy === "status" && sortIcon}
 									</th>
 									<th scope="col" onClick={() => handleSort("createdAt")}>
-										Data di creazione
+										Data di creazione {sortBy === "createdAt" && sortIcon}
 									</th>
 								</tr>
 							</thead>
