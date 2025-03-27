@@ -48,24 +48,22 @@ export default function useTasks() {
 
 	// funzione per modificare una task
 	const updateTask = async (updatedTask) => {
-		try {
-			const response = await fetch(`${apiUrl}/tasks/${updatedTask.id}`, {
-				method: "PUT",
-				headers: {
-					"content-type": "application/json",
-				},
-				body: JSON.stringify(updatedTask),
-			});
-			const data = await response.json();
-			if (!data.success) {
-				throw new Error(data.message);
-			}
-			setTasks((prevTasks) =>
-				prevTasks.map((task) => (task.id === updatedTask.id ? data.task : task))
-			);
-		} catch (error) {
-			throw new Error("Errore nella modifica della task: " + error.message);
+		const response = await fetch(`${apiUrl}/tasks/${updatedTask.id}`, {
+			method: "PUT",
+			headers: {
+				"content-type": "application/json",
+			},
+			body: JSON.stringify(updatedTask),
+		});
+		const { success, message, task: newTask } = await response.json();
+		if (!success) {
+			throw new Error(message);
 		}
+		setTasks((prevTasks) =>
+			prevTasks.map((oldTask) =>
+				oldTask.id === newTask.id ? newTask : oldTask
+			)
+		);
 	};
 
 	return { tasks, fetchTaskList, addTask, removeTask, updateTask };

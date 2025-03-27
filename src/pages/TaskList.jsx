@@ -73,7 +73,6 @@ export default function TaskList() {
 						<div className="mt-3 mb-3">
 							<input
 								type="text"
-								name="ricerca"
 								placeholder="Ricerca task"
 								ref={searchQueryRef}
 							/>

@@ -8,7 +8,8 @@ export default function TaskDetail() {
 	const { tasks, removeTask, updateTask } = taskContext();
 	const { id } = useParams();
 	const navigate = useNavigate();
-	const [showModal, setShowModal] = useState(false);
+
+	const [showDeleteModal, setShowDeleteModal] = useState(false);
 	const [showEditModal, setShowEditModal] = useState(false);
 
 	const taskDetail = tasks.find((task) => task.id == id);
@@ -32,6 +33,7 @@ export default function TaskDetail() {
 			alert("Task aggiornata con successo");
 			setShowEditModal(false);
 		} catch {
+			console.error(error);
 			alert("Errore" + error.message);
 		}
 	}
@@ -39,7 +41,9 @@ export default function TaskDetail() {
 		<div className="container mt-4">
 			{taskDetail ? (
 				<div>
-					<h1 className="mb-4">Dettaglio della task: {taskDetail.title}</h1>
+					<h1 className="mb-4">
+						Dettaglio della task: {taskDetail.title.toLowerCase()}
+					</h1>
 					<div>
 						<p>
 							Stato: <strong>{taskDetail.status}</strong>
@@ -51,7 +55,7 @@ export default function TaskDetail() {
 					</div>
 					<button
 						onClick={() => {
-							setShowModal(true);
+							setShowDeleteModal(true);
 						}}
 						className="btn btn-danger"
 						type="button"
@@ -66,14 +70,18 @@ export default function TaskDetail() {
 					>
 						Modifica Task
 					</button>
+
+					{/* modale per eliminazione task */}
 					<Modal
-						title={`Conferma eliminazione task : ${taskDetail.title}`}
+						title={`Conferma eliminazione della task : ${taskDetail.title.toLowerCase()}`}
 						content="Sei sicuro di voler eliminare questa task?"
-						show={showModal}
-						onClose={() => setShowModal(false)}
+						show={showDeleteModal}
+						onClose={() => setShowDeleteModal(false)}
 						onConfirm={handleConfirm}
 						confirmText="Elimina"
 					/>
+
+					{/* modale per modifica task */}
 					<EditTaskModal
 						show={showEditModal}
 						onClose={() => setShowEditModal(false)}

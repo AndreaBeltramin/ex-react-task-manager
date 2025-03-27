@@ -1,22 +1,20 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import Modal from "./Modal";
 
 export default function EditTaskModal({ show, onClose, task, onSave }) {
-	const [title, setTitle] = useState("");
-	const [description, setDescription] = useState("");
-	const [status, setStatus] = useState("");
+	const [editedTask, setEditedTask] = useState(task);
+	const { title, description, status } = editedTask;
 	const editFormRef = useRef();
+
+	const changeEditedTask = (key, event) => {
+		setEditedTask((prev) => ({ ...prev, [key]: event.target.value }));
+	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-
-		const updatedTask = { ...task, title, description, status };
-		onSave(updatedTask);
-
-		setTitle("");
-		setDescription("");
-		setStatus("");
+		onSave(editedTask);
 	};
+
 	return (
 		<>
 			<Modal
@@ -29,22 +27,20 @@ export default function EditTaskModal({ show, onClose, task, onSave }) {
 						<input
 							id="title"
 							type="text"
-							name="title"
 							value={title}
-							onChange={(e) => setTitle(e.target.value)}
+							onChange={(e) => changeEditedTask("title", e)}
 						/>
 						<label htmlFor="description">Inserisci la nuova descrizione</label>
 						<textarea
 							id="description"
-							name="description"
 							value={description}
-							onChange={(e) => setDescription(e.target.value)}
+							onChange={(e) => changeEditedTask("description", e)}
 						/>
 						<label htmlFor="status">Seleziona una nuova opzione</label>
 						<select
 							id="status"
 							value={status}
-							onChange={(e) => setStatus(e.target.value)}
+							onChange={(e) => changeEditedTask("status", e)}
 							className="ms-2"
 						>
 							<option value="">Seleziona</option>
