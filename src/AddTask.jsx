@@ -7,8 +7,7 @@ export default function AddTask() {
 	const [title, setTitle] = useState("");
 	const descriptionRef = useRef();
 	const statusRef = useRef();
-	const { tasks, fetchTaskList, addTask, removeTask, updateTask } =
-		taskContext();
+	const { addTask } = taskContext();
 
 	const isTitleNotValid = [...title].some((char) => symbols.includes(char));
 
