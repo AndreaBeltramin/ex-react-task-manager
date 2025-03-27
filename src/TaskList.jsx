@@ -1,8 +1,9 @@
-import { Context } from "./GlobalContext";
+import { taskContext } from "./GlobalContext";
 import TableRow from "./TaskRow";
 
 export default function TaskList() {
-	const [tasks, fetchTaskList, addTask, removeTask, updateTask] = Context();
+	const { tasks, fetchTaskList, addTask, removeTask, updateTask } =
+		taskContext();
 
 	return (
 		<>

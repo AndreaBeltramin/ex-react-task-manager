@@ -11,7 +11,7 @@ export const GlobalProvider = ({ children }) => {
 	// return del provider
 	return (
 		<GlobalContext.Provider
-			value={[tasks, fetchTaskList, addTask, removeTask, updateTask]}
+			value={{ tasks, fetchTaskList, addTask, removeTask, updateTask }}
 		>
 			{children}
 		</GlobalContext.Provider>
@@ -19,6 +19,6 @@ export const GlobalProvider = ({ children }) => {
 };
 
 // esporto il contesto
-export const Context = () => {
+export const taskContext = () => {
 	return useContext(GlobalContext);
 };

@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { Context } from "./GlobalContext";
+import { taskContext } from "./GlobalContext";
 
 const symbols = "!@#$%^&*()-_=+[]{}|;:'\\\",.<>?/`~";
 
@@ -7,7 +7,8 @@ export default function AddTask() {
 	const [title, setTitle] = useState("");
 	const descriptionRef = useRef();
 	const statusRef = useRef();
-	const [tasks, fetchTaskList, addTask, removeTask, updateTask] = Context();
+	const { tasks, fetchTaskList, addTask, removeTask, updateTask } =
+		taskContext();
 
 	const isTitleNotValid = [...title].some((char) => symbols.includes(char));
 

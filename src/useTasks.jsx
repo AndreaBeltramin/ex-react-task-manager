@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 
 export default function useTasks() {
 	const [tasks, setTasks] = useState([]);
-
 	const apiUrl = import.meta.env.VITE_URL_API;
 
 	// all'avvio dell'app effettuo una richiesta al server per ricevere le task
@@ -56,7 +55,27 @@ export default function useTasks() {
 				}
 			});
 	};
-	const updateTask = () => {};
+	const updateTask = async (updatedTask) => {
+		try {
+			const response = await fetch(`${apiUrl}/tasks/${updatedTask.id}`, {
+				method: "PUT",
+				headers: {
+					"content-type": "application/json",
+				},
+				body: JSON.stringify(updatedTask),
+			});
+			const data = await response.json();
+			if (!data.success) {
+				throw new Error(data.message);
+			}
+
+			setTasks((prevTasks) =>
+				prevTasks.map((task) => (task.id === updatedTask.id ? data.task : task))
+			);
+		} catch (error) {
+			throw new Error("Errore nella modifica della task: " + error.message);
+		}
+	};
 
 	return { tasks, fetchTaskList, addTask, removeTask, updateTask };
 }

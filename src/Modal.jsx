@@ -16,7 +16,7 @@ export default function Modal({
 					<h5 className="modal-title">{title}</h5>
 				</div>
 				<div className="modal-body">
-					<p>{content}</p>
+					<div>{content}</div>
 				</div>
 				<div className="modal-footer">
 					<button
