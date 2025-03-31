@@ -22,26 +22,38 @@ export default function EditTaskModal({ show, onClose, task, onSave }) {
 				onClose={onClose}
 				title="Modifica Task"
 				content={
-					<form ref={editFormRef} onSubmit={handleSubmit} className="m-2">
-						<label htmlFor="title">Inserisci il nuovo titolo </label>
+					<form
+						ref={editFormRef}
+						onSubmit={handleSubmit}
+						className="m-2 d-flex flex-column"
+					>
+						<label htmlFor="title" className="fs-4">
+							Inserisci il nuovo titolo:
+						</label>
 						<input
 							id="title"
 							type="text"
-							value={title}
+							value={title.toLowerCase()}
 							onChange={(e) => changeEditedTask("title", e)}
+							className="fs-4"
 						/>
-						<label htmlFor="description">Inserisci la nuova descrizione</label>
+						<label htmlFor="description" className="fs-4">
+							Inserisci la nuova descrizione:{" "}
+						</label>
 						<textarea
 							id="description"
-							value={description}
+							value={description.toLowerCase()}
 							onChange={(e) => changeEditedTask("description", e)}
+							className="fs-4 mt-2"
 						/>
-						<label htmlFor="status">Seleziona una nuova opzione</label>
+						<label htmlFor="status" className="fs-4">
+							Seleziona una nuova opzione:{" "}
+						</label>
 						<select
 							id="status"
 							value={status}
 							onChange={(e) => changeEditedTask("status", e)}
-							className="ms-2"
+							className="ms-2 fs-4"
 						>
 							<option value="">Seleziona</option>
 							<option value="To do">To do</option>

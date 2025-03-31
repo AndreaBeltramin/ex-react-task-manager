@@ -1,3 +1,7 @@
+th:hover {
+	background-color: rgb(220, 212, 212);
+	color: rgb(108, 108, 108);
+}
 a {
 	text-decoration: none;
 	color: inherit;
@@ -15,14 +19,12 @@ a {
 }
 .modal-container {
 	position: absolute;
-	position: absolute;
 	top: 50%;
 	left: 50%;
-	margin-top: -100px;
-	margin-left: -100px;
+	transform: translate(-50%, -50%);
 	background-color: white;
 	border-radius: 5px;
 	padding: 10px;
-	width: 350px;
-	z-index: 1;
+	width: max-content;
+	height: max-content;
 }

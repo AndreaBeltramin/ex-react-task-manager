@@ -1,11 +1,11 @@
-import { createContext, useContext } from "react";
+import { createContext } from "react";
 import useTasks from "./useTasks";
 
 // creo un contesto
-const GlobalContext = createContext();
+export const GlobalContext = createContext();
 
 // esporto il provider
-export const GlobalProvider = ({ children }) => {
+export function GlobalProvider({ children }) {
 	const taskData = useTasks();
 
 	// return del provider
@@ -14,9 +14,4 @@ export const GlobalProvider = ({ children }) => {
 			{children}
 		</GlobalContext.Provider>
 	);
-};
-
-// esporto il contesto
-export const taskContext = () => {
-	return useContext(GlobalContext);
-};
+}

@@ -1,5 +1,6 @@
 import { useState, useRef, useMemo } from "react";
-import { taskContext } from "../GlobalContext";
+import { useContext } from "react";
+import { GlobalContext } from "../GlobalContext";
 
 const symbols = "!@#$%^&*()-_=+[]{}|;:'\\\",.<>?/`~";
 
@@ -7,7 +8,7 @@ export default function AddTask() {
 	const [title, setTitle] = useState("");
 	const descriptionRef = useRef();
 	const statusRef = useRef();
-	const { addTask } = taskContext();
+	const { addTask } = useContext(GlobalContext);
 
 	const isTitleNotValid = useMemo(() => {
 		if (!title.trim()) return "Il titolo non può essere vuoto";
@@ -39,7 +40,7 @@ export default function AddTask() {
 	return (
 		<>
 			<div className="container mt-4">
-				<h1>Form per aggiunta Task</h1>
+				<h1>Form per aggiunta task</h1>
 				<div className="row">
 					<div className="row-cols-2">
 						<form onSubmit={handleSubmit}>
@@ -70,6 +71,9 @@ export default function AddTask() {
 							</div>
 
 							<div className="mb-3">
+								<label htmlFor="selectTask" className="form-label">
+									Stato
+								</label>
 								<select
 									className="form-select"
 									id="selectTask"

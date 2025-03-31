@@ -43,7 +43,11 @@ export default function useTasks() {
 		const { success, message } = await response.json();
 		if (!success) throw new Error(message);
 
-		setTasks((prev) => prev.filter((task) => task.id !== id));
+		setTasks((prev) => {
+			const updatedTasks = prev.filter((task) => task.id !== id);
+			console.log(updatedTasks);
+			return updatedTasks;
+		});
 	};
 
 	// funzione per modificare una task

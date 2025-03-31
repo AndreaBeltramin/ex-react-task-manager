@@ -10,7 +10,6 @@ const TableRow = React.memo(({ task, checked, onToggle }) => {
 						<Link to={`/task/${task.id}`}>{task.title}</Link>
 						<input
 							type="checkbox"
-							checked={checked}
 							// onChange={onToggle(task.id)}
 						/>
 					</div>
